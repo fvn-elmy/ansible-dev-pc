@@ -25,22 +25,33 @@
       args:
         creates: ~/.vscode/extensions/{{ item }}-*/package.json
       loop:
-        - amodio.toggle-excluded-files                    # Toggle Excluded Files
+        #- amodio.toggle-excluded-files                    # Toggle Excluded Files
         - editorconfig.editorconfig                       # EditorConfig for VS Code
         - ms-vsliveshare.vsliveshare-pack                 # Live Share Extension Pack
-        - ms-vscode-remote.vscode-remote-extensionpack    # Remote Development
-        - pkief.material-icon-theme                       # Material Icon Theme
-        - pflannery.vscode-versionlens                    # Version Lens
-        - streetsidesoftware.code-spell-checker           # Code Spell Checker
-        - thenikso.github-plus-theme                      # GitHub Plus Theme
+        #- pkief.material-icon-theme                       # Material Icon Theme
+        #- eamodio.toggle-excluded-files                   # Toggle Excluded Files
+        #- pflannery.vscode-versionlens                    # Version Lens
         - visualstudioexptteam.vscodeintellicode          # Visual Studio IntelliCode
 
-    - name: Override default VS Code preferences
-      copy:
-        src: settings.json
-        dest: ~/.config/Code/User/settings.json
+    - name: Ensure ~/.config folder exists
+      file:
+        path: ~/.config
+        state: directory
+        mode: 0700
 
-    - name: Override default VS Code key bindings
-      copy:
-        src: keybindings.json
-        dest: ~/.config/Code/User/keybindings.json
+    - name: Link '~/Library/Application Support/Code' to '~/.config/Code' (macOS)
+      file:
+        path: ~/.config/Code
+        src: ~/Library/Application Support/Code
+        state: link
+      when: is_mac
+
+#    - name: Override default VS Code preferences
+#      copy:
+#        src: settings.json
+#        dest: ~/.config/Code/User/settings.json
+#
+#    - name: Override default VS Code key bindings
+#      copy:
+#        src: keybindings.json
+#        dest: ~/.config/Code/User/keybindings.json

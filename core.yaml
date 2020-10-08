@@ -79,6 +79,8 @@
         - uuid
         - xclip
 
+        - direnv
+        - etckeeper
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes
       apt:
