@@ -1,0 +1,50 @@
+- name: Google Cloud SDK
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_ubuntu: "{{ ansible_distribution == 'Ubuntu' }}"
+
+  tasks:
+
+    # Linux
+
+    - name: Add Google Chrome APT package repository
+      become: yes
+      apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+        filename: google-cloud-sdk
+        update_cache: no
+      register: apt_repository
+      when: is_ubuntu
+
+    - name: Install Google Chrome (Linux)
+      become: yes
+      apt:
+        pkg:
+        - apt-transport-https
+        - ca-certificates
+        - gnupg
+      when: is_ubuntu
+
+    - name: Add Google APT package key
+      become: yes
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        keyring: /usr/share/keyrings/cloud.google.gpg
+      when: is_ubuntu
+
+    - name: Update APT package list
+      become: yes
+      apt:
+        update_cache: yes
+      when: apt_repository.changed
+      register: apt_update
+      retries: 5
+      until: apt_update is success
+
+    - name: Install Google Cloud SDK (Linux)
+      become: yes
+      apt:
+        package:  google-cloud-sdk
+      when: is_ubuntu

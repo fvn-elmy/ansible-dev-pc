@@ -18,13 +18,13 @@
 # Visual Studio Code
 - import_playbook: vscode/core.yaml
 
-# Azure
-- import_playbook: azure/az.yaml
-- import_playbook: azure/azshell.yaml
-- import_playbook: azure/storage-explorer.yaml
+## Azure
+#- import_playbook: azure/az.yaml
+#- import_playbook: azure/azshell.yaml
+#- import_playbook: azure/storage-explorer.yaml
 
-# Broot
-- import_playbook: broot/core.yaml
+## Broot
+#- import_playbook: broot/core.yaml
 
 # Docker
 - import_playbook: docker/core.yaml
@@ -48,8 +48,8 @@
 # Kubernetes
 - import_playbook: kubectl/core.yaml
 
-# Virtualization (QEMU/KVM on Linux, VirtualBox on macOS)
-- import_playbook: virtualization/core.yaml
+## Virtualization (QEMU/KVM on Linux, VirtualBox on macOS)
+#- import_playbook: virtualization/core.yaml
 
 # Mono (.NET Framework)
 - import_playbook: mono/core.yaml
@@ -57,8 +57,8 @@
 # NodeJS
 - import_playbook: nodejs/core.yaml
 
-# Nomad
-- import_playbook: nomad/core.yaml
+## Nomad
+#- import_playbook: nomad/core.yaml
 
 # Postman
 - import_playbook: postman/core.yaml
@@ -69,8 +69,8 @@
 # Python
 - import_playbook: python/core.yaml
 
-# Ruby
-- import_playbook: ruby/core.yaml
+## Ruby
+#- import_playbook: ruby/core.yaml
 
 ##### Applications (free)
 
@@ -83,14 +83,14 @@
 # Google Chrome
 - import_playbook: google-chrome/core.yaml
 
-# Prettier version of ping w/ graphs
-- import_playbook: prettyping/core.yaml
+## Prettier version of ping w/ graphs
+#- import_playbook: prettyping/core.yaml
 
 # RDP/X/VNC/SSH client
 - import_playbook: remmina/core.yaml
 
-# Slack desktop application
-- import_playbook: slack/core.yaml
+## Slack desktop application
+#- import_playbook: slack/core.yaml
 
 # Microsoft Teams
 - import_playbook: teams/core.yaml
@@ -98,22 +98,26 @@
 # VideoLan Client (primarily for codecs)
 - import_playbook: vlc/core.yaml
 
-# Zoom
-- import_playbook: zoom/core.yaml
+## Zoom
+#- import_playbook: zoom/core.yaml
 
 ##### Applications (commercial license required)
 
-# Beyond Compare 4
-- import_playbook: bc4/core.yaml
+## Beyond Compare 4
+#- import_playbook: bc4/core.yaml
 
-# Google Backup and Sync (macOS) / Insync (Linux)
-- import_playbook: google-backup/core.yaml
+## Google Backup and Sync (macOS) / Insync (Linux)
+#- import_playbook: google-backup/core.yaml
 
-# JetBrains Toolbox (used to install/updated JetBrains tools)
-- import_playbook: jetbrains/core.yaml
+## JetBrains Toolbox (used to install/updated JetBrains tools)
+#- import_playbook: jetbrains/core.yaml
 
-# Spotify
-- import_playbook: spotify/core.yaml
+## Spotify
+#- import_playbook: spotify/core.yaml
 
 # Sublime Text and Sublime Merge
 - import_playbook: sublime/core.yaml
+
+##### This has to be last, because it enables WSL Remote, which breaks installing Code extensions in WSL 2
+
+- import_playbook: vscode/customization.yaml

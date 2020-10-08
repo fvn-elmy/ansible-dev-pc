@@ -65,6 +65,8 @@
         - unzip
         - uuid
         - xclip
+        - direnv
+        - etckeeper
       when: not is_mac
 
     - name: Add /snap/bin to PATH

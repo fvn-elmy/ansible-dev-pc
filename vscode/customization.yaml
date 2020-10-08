@@ -11,13 +11,13 @@
       args:
         creates: ~/.vscode/extensions/{{ item }}-*/package.json
       loop:
-        - streetsidesoftware.code-spell-checker           # Code Spell Checker
+        #- streetsidesoftware.code-spell-checker           # Code Spell Checker
         - editorconfig.editorconfig                       # EditorConfig for VS Code
-        - thenikso.github-plus-theme                      # GitHub Plus Theme
+        #- thenikso.github-plus-theme                      # GitHub Plus Theme
         - ms-vsliveshare.vsliveshare-pack                 # Live Share Extension Pack
-        - pkief.material-icon-theme                       # Material Icon Theme
-        - eamodio.toggle-excluded-files                   # Toggle Excluded Files
-        - pflannery.vscode-versionlens                    # Version Lens
+        #- pkief.material-icon-theme                       # Material Icon Theme
+        #- eamodio.toggle-excluded-files                   # Toggle Excluded Files
+        #- pflannery.vscode-versionlens                    # Version Lens
         - visualstudioexptteam.vscodeintellicode          # Visual Studio IntelliCode
         - ms-vscode-remote.vscode-remote-extensionpack    # Remote Development
 
@@ -34,12 +34,12 @@
         state: link
       when: is_mac
 
-    - name: Override default VS Code preferences
-      copy:
-        src: settings.json
-        dest: ~/.config/Code/User/settings.json
-
-    - name: Override default VS Code key bindings
-      copy:
-        src: keybindings.json
-        dest: ~/.config/Code/User/keybindings.json
+#    - name: Override default VS Code preferences
+#      copy:
+#        src: settings.json
+#        dest: ~/.config/Code/User/settings.json
+#
+#    - name: Override default VS Code key bindings
+#      copy:
+#        src: keybindings.json
+#        dest: ~/.config/Code/User/keybindings.json
