@@ -47,3 +47,24 @@
       become: yes
       apt:
         package: ripgrep
+      when: not is_mac and not is_ubuntu_bionic and not is_debian_stretch
+
+    - name: Install TIG
+      become: yes
+      apt:
+        package: tig
+      when: not is_mac
+
+    # macOS
+
+    - name: Install Homebrew packages
+      homebrew:
+        name: "{{ item }}"
+      loop:
+        - git
+        - git-gui
+        - git-lfs
+        - gpg
+        - gnu-sed
+        - ripgrep
+      when: is_mac

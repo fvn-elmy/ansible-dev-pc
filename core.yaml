@@ -84,6 +84,8 @@
         - etckeeper
         - task-spooler
 
+        - direnv
+        - etckeeper
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes
       apt:
