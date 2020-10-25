@@ -89,8 +89,8 @@
 # Microsoft Teams
 - import_playbook: teams/core.yaml
 
-# VideoLan Client (primarily for codecs)
-- import_playbook: vlc/core.yaml
+# Multimedia tools (VLC, FFMPEG, Handbrake)
+- import_playbook: multimedia/core.yaml
 
 ##### Applications (commercial license required)
 

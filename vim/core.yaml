@@ -1,0 +1,30 @@
+- name: VIM
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+
+  tasks:
+    - set_fact: is_wsl={{ not is_mac and lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}
+
+    # Linux
+
+    - name: Install VIM (Linux)
+      become: yes
+      apt:
+        package: vim
+      when: not is_mac
+
+    - name: Install Fuzzy Finder (Linux)
+      become: yes
+      apt:
+        package: fzf
+      when: not is_mac
+
+    # macOS
+
+    - name: Install VIM (macOS)
+      homebrew_cask:
+        name: vim
+      when: is_mac

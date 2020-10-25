@@ -86,6 +86,7 @@
 
         - direnv
         - etckeeper
+        - libgconf-2-4
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes
       apt:
