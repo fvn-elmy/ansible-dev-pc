@@ -1,4 +1,4 @@
-- name: VLC
+- name: VIM
   hosts: 127.0.0.1
   connection: local
 
@@ -10,15 +10,21 @@
 
     # Linux
 
-    - name: Install VLC (Linux)
+    - name: Install VIM (Linux)
       become: yes
       apt:
-        package: vlc
-      when: not is_mac and not is_wsl
+        package: vim
+      when: not is_mac
+
+    - name: Install Fuzzy Finder (Linux)
+      become: yes
+      apt:
+        package: fzf
+      when: not is_mac
 
     # macOS
 
-    - name: Install VLC (macOS)
+    - name: Install VIM (macOS)
       homebrew_cask:
-        name: vlc
+        name: vim
       when: is_mac

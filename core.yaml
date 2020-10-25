@@ -67,6 +67,7 @@
         - xclip
         - direnv
         - etckeeper
+        - libgconf-2-4
       when: not is_mac
 
     - name: Add /snap/bin to PATH
