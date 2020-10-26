@@ -109,6 +109,9 @@
 # Sublime Text and Sublime Merge
 - import_playbook: sublime/core.yaml
 
+# 1Password linux beta client
+- import_playbook: 1password/core.yaml
+
 ##### This has to be last, because it enables WSL Remote, which breaks installing Code extensions in WSL 2
 
 - import_playbook: vscode/customization.yaml
