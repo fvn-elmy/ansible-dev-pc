@@ -13,6 +13,11 @@
 
 - import_playbook: core.yaml
 
+##### Drivers
+
+# Display Link drivers
+- import_playbook: displaylink/core.yaml
+
 ##### Developer tools
 
 # Visual Studio Code
@@ -90,7 +95,10 @@
 - import_playbook: teams/core.yaml
 
 # Multimedia tools (VLC, FFMPEG, Handbrake)
-- import_playbook: multimedia/core.yaml
+- import_playbook: video/core.yaml
+
+# Image manipulation
+- import_playbook: image-processing/core.yaml
 
 ##### Applications (commercial license required)
 

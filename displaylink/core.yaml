@@ -1,26 +1,35 @@
-- name: DisplayLink
+- name: displaylink
   hosts: 127.0.0.1
   connection: local
 
   vars:
     ubuntu_focal_installer_fileid: 1576
-    ubuntu_focal_installer_version: 5.3.1.34
+    # ubuntu_focal_installer_version: 5.3.1.34
+    base_download_url: https://www.displaylink.com/downloads/
+
     is_ubuntu_focal: "{{ ansible_distribution_release == 'focal' }}"
 
   tasks:
     # Linux
-
     - name: Fetch installer archive (Linux)
+      shell:
+        cmd: curl -L -F 'fileId={{ubuntu_focal_installer_fileid}}' -F 'accept_submit=Accept' {{base_download_url}}/file?id={{ubuntu_focal_installer_fileid}} -o /tmp/displaylink-driver-{{ubuntu_focal_installer_fileid}}.zip
+        warn: false
+      args:
+        creates: /tmp/displaylink-driver-{{ubuntu_focal_installer_fileid}}.zip
+      register: displaylink_download_linux
+      when: is_ubuntu_focal
+
+    - name: Unzip  installer archive (Linux)
       # become: yes
       unarchive:
-        src: https://www.displaylink.com/downloads/file?id={{ubuntu_focal_installer_fileid}}
-        dest: /tmp/displaylink-{{ubuntu_focal_installer_version}}
-        remote_src: yes
-        creates: /tmp/displaylink-{{ubuntu_focal_installer_version}}
-      register: displaylink_download_linux
+        src: /tmp/displaylink-driver-{{ubuntu_focal_installer_fileid}}.zip
+        dest: /tmp
+        remote_src: no
+        # creates: /tmp/displaylink-driver-{{ubuntu_focal_installer_version}}.run
       when: is_ubuntu_focal
 
     - name: Run installer as sudoer
       become: yes
-      shell: /tmp/displaylink-{{ubuntu_focal_installer_version}}/displaylink-driver-{{ubuntu_focal_installer_version}}.run
-      when: is_ubuntu_focal
+      shell: /tmp/displaylink-driver-*.run
+      when: is_ubuntu_focal and displaylink_download_linux
