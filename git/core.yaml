@@ -48,6 +48,7 @@
         - git-gui
         - git-lfs
         - gitk
+        - tig
       when: not is_mac
 
     - name: Install ripgrep (Ubuntu 18.04 / Debian Stretch)
@@ -62,12 +63,6 @@
         package: ripgrep
       when: not is_mac and not is_ubuntu_bionic and not is_debian_stretch
 
-    - name: Install TIG
-      become: yes
-      apt:
-        package: tig
-      when: not is_mac
-
     # macOS
 
     - name: Install Homebrew packages
@@ -80,4 +75,5 @@
         - gpg
         - gnu-sed
         - ripgrep
+        - tig
       when: is_mac
