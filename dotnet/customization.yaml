@@ -14,3 +14,6 @@
         - dotnet-outdated
         - dotnet-reportgenerator-globaltool
         - dotnet-retire
+        - Paket
+        - fake-cli
+
