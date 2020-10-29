@@ -9,3 +9,10 @@
         warn: false
       args:
         creates: ~/.nvm/install.sh
+
+    - name: Install python2 for building gyp dependencies
+      become: yes
+      apt:
+        package: python2-minimal
+      when: not is_mac
+
