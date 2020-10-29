@@ -102,6 +102,7 @@
 
 # Multimedia tools (VLC, FFMPEG, Handbrake)
 - import_playbook: video/core.yaml
+- import_playbook: obs-studio/core.yaml
 
 # Image manipulation
 - import_playbook: image-processing/core.yaml
