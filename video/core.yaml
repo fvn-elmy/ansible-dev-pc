@@ -21,12 +21,18 @@
       become: yes
       apt:
         package: ffmpeg
-      when: is_ubuntu and not is_wsl
+      when: is_ubuntu
 
     - name: Install Handbrake (Linux)
       become: yes
       apt:
         package: handbrake
+      when: is_ubuntu and not is_wsl
+
+    - name: Install video4linux utils  (Linux)
+      become: yes
+      apt:
+        package: v4l-utils
       when: is_ubuntu and not is_wsl
 
     # macOS
