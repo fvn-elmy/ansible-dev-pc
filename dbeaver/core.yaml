@@ -1,0 +1,15 @@
+- name: DBeaver
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_debian: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS'  or ansible_distribution == 'Debian' }}"
+
+  tasks:
+    # Linux
+
+    - name: Install DBeaver SQL client from provided debian package
+      become: yes
+      apt:
+        deb: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+      when: is_debian
