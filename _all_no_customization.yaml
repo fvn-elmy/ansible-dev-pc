@@ -62,6 +62,10 @@
 # Python
 - import_playbook: python/core.yaml
 
+# Developer tools
+- import_playbook: dev-tools/cli.yaml
+- import_playbook: dev-tools/ui.yaml
+
 ## Ruby
 #- import_playbook: ruby/core.yaml
 

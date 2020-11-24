@@ -85,7 +85,9 @@
         - task-spooler
 
         - direnv
+        - dos2unix
         - etckeeper
+        - task-spooler
         - libgconf-2-4
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes

@@ -2,6 +2,9 @@
   hosts: 127.0.0.1
   connection: local
 
+  vars:
+    is_mac: "{{ ansible_distribution == 'MacOSX'  }}"
+
   tasks:
     - name: Install Node Version Manager
       shell:

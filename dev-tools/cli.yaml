@@ -1,0 +1,39 @@
+- name: Developer tools
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_debian: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS'  or ansible_distribution == 'Debian' }}"
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+    SOPS_VERSION: "3.6.1"
+    GLOW_VERSION: "1.1.0"
+
+  tasks:
+    # Linux
+
+    - name: Install SOPS from github releases
+      become: yes
+      apt:
+        deb: https://github.com/mozilla/sops/releases/download/v{{SOPS_VERSION}}/sops_{{SOPS_VERSION}}_amd64.deb
+      when: is_debian
+
+    - name: Install Glow (TUI markdown reader)
+      become: yes
+      apt:
+        deb: https://github.com/charmbracelet/glow/releases/download/v{{GLOW_VERSION}}/glow_{{GLOW_VERSION}}_linux_amd64.deb
+      when: is_debian
+
+    - name: Install FD (find alternative)
+      become: yes
+      apt:
+        package: fd-find
+      when: is_debian
+
+    - name: Install latest zoxide (Linux)
+      become: yes
+      get_url:
+        url: https://gitreleases.dev/gh/ajeetdsouza/zoxide/latest/zoxide-x86_64-unknown-linux-gnu
+        dest: /usr/local/bin/zoxide
+        mode: 0755
+      register: zoxide_download_linux
+      when: not is_mac
