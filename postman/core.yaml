@@ -13,7 +13,8 @@
     - name: Install Postman (Linux)
       become: yes
       unarchive:
-        src: https://dl.pstmn.io/download/latest/linux64
+        # src: https://dl.pstmn.io/download/latest/linux64 # latest
+        src: https://go.pstmn.io/dl-linux64-v6-latest # v6
         dest: /opt
         remote_src: yes
         creates: /opt/Postman/Postman
