@@ -1,0 +1,29 @@
+- name: git
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+    is_ubuntu: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS' }}"
+
+  tasks:
+    # Linux
+
+    - name: Install APT package
+      become: yes
+      apt:
+        package: "{{ item }}"
+      loop:
+        - postgresql-client
+        - mariadb-client-10.3
+      when: is_ubuntu
+
+    # macOS
+
+    - name: Install Homebrew packages
+      homebrew:
+        name: "{{ item }}"
+      loop:
+        - mariadb
+        - postgres
+      when: is_mac
