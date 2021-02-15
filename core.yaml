@@ -80,10 +80,7 @@
         - unzip
         - uuid
         - xclip
-        - direnv
-        - etckeeper
-        - task-spooler
-
+        - xdotool
         - direnv
         - dos2unix
         - etckeeper
