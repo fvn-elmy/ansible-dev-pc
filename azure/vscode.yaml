@@ -9,4 +9,3 @@
         creates: ~/.vscode/extensions/{{ item }}-*/package.json
       loop:
         - ms-azure-devops.azure-pipelines
-        - msazurermtools.azurerm-vscode-tools

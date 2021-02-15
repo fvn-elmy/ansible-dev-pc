@@ -59,12 +59,14 @@
         - htop
         - inetutils-traceroute
         - jq
+        - mlocate
         - net-tools
         - p7zip-full
         - snapd
         - unzip
         - uuid
         - xclip
+        - xdotool
         - direnv
         - dos2unix
         - etckeeper

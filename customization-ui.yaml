@@ -252,6 +252,7 @@
     fonts_apt:
       - fonts-crosextra-carlito
       - fonts-crosextra-caladea
+      - fonts-powerline
 
     gnome_extensions:
       # Dash to Panel (Windows-style bottom task bar)
