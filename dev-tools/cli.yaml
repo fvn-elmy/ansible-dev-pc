@@ -7,9 +7,12 @@
     is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     SOPS_VERSION: "3.6.1"
     GLOW_VERSION: "1.1.0"
+    ELM_VERSION: "0.19.1"
+    ELM_RELEASE_URL: "https://github.com/elm/compiler/releases/download/{{ELM_VERSION}}/binary-for-linux-64-bit.gz"
 
   tasks:
     # Linux
+    - set_fact: is_wsl={{ not is_mac and lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}
 
     - name: Install SOPS from github releases
       become: yes
@@ -37,3 +40,14 @@
         mode: 0755
       register: zoxide_download_linux
       when: not is_mac
+
+    - name: Install latest ELM (Linux)
+      become: yes
+      become_method: sudo
+      shell: |
+        curl -L -o elm.gz {{ELM_RELEASE_URL}}
+        gunzip elm.gz
+        chmod +x elm
+        sudo mv elm /usr/local/bin/
+      register: elm_installed
+      when: not is_mac and not is_wsl
