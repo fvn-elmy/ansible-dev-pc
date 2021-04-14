@@ -51,7 +51,7 @@
     - name: Install Azure Data Studio
       become: yes
       apt:
-        deb: https://go.microsoft.com/fwlink/?linkid=2155223
+        deb: https://go.microsoft.com/fwlink/?linkid=2157352
         state: present
         autoremove: true
       register: azuredatastudio
