@@ -53,8 +53,8 @@
 # Kubernetes
 - import_playbook: kubectl/core.yaml
 
-## Virtualization (QEMU/KVM on Linux, VirtualBox on macOS)
-#- import_playbook: virtualization/core.yaml
+# Virtualization (QEMU/KVM on Linux, VirtualBox on macOS)
+- import_playbook: virtualization/core.yaml
 
 # Mono (.NET Framework)
 - import_playbook: mono/core.yaml
@@ -62,8 +62,8 @@
 # NodeJS
 - import_playbook: nodejs/core.yaml
 
-## Nomad
-#- import_playbook: nomad/core.yaml
+# Nomad
+- import_playbook: nomad/core.yaml
 
 # Postman
 - import_playbook: postman/core.yaml
@@ -133,7 +133,3 @@
 
 # 1Password linux beta client
 - import_playbook: 1password/core.yaml
-
-##### This has to be last, because it enables WSL Remote, which breaks installing Code extensions in WSL 2
-
-- import_playbook: vscode/customization.yaml
