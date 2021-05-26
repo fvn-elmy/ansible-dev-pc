@@ -3,33 +3,39 @@
   connection: local
 
   vars:
-    ubuntu_focal_installer_fileid: 1576
-    # ubuntu_focal_installer_version: 5.3.1.34
-    base_download_url: https://www.displaylink.com/downloads/
+    ubuntu_focal_installer_version: 5.4.0-55.153
+    download_url: "https://www.synaptics.com/sites/default/files/exe_files/2021-04/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.4-EXE.zip"
 
     is_ubuntu_focal: "{{ ansible_distribution_release == 'focal' }}"
 
   tasks:
     # Linux
-    - name: Fetch installer archive (Linux)
-      shell:
-        cmd: curl -L -F 'fileId={{ubuntu_focal_installer_fileid}}' -F 'accept_submit=Accept' {{base_download_url}}/file?id={{ubuntu_focal_installer_fileid}} -o /tmp/displaylink-driver-{{ubuntu_focal_installer_fileid}}.zip
-        warn: false
-      args:
-        creates: /tmp/displaylink-driver-{{ubuntu_focal_installer_fileid}}.zip
-      register: displaylink_download_linux
+    - name: Install DisplayLink requirements (Linux)
+      become: yes
+      apt:
+        pkg:
+        - dkms
+        - libdrm-dev
       when: is_ubuntu_focal
 
     - name: Unzip  installer archive (Linux)
       # become: yes
       unarchive:
-        src: /tmp/displaylink-driver-{{ubuntu_focal_installer_fileid}}.zip
+        src: "{{download_url}}"
         dest: /tmp
-        remote_src: no
+        remote_src: yes
         # creates: /tmp/displaylink-driver-{{ubuntu_focal_installer_version}}.run
+      register: displaylink_download_linux
       when: is_ubuntu_focal
+
+    - name: Make script executable
+      file:
+        path: /tmp/displaylink-driver-{{ubuntu_focal_installer_version}}.run
+        mode: "u=rx"
+      when: is_ubuntu_focal and displaylink_download_linux
 
     - name: Run installer as sudoer
       become: yes
-      shell: /tmp/displaylink-driver-*.run
+      shell:
+        /tmp/displaylink-driver-{{ubuntu_focal_installer_version}}.run
       when: is_ubuntu_focal and displaylink_download_linux
