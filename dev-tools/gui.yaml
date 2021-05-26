@@ -7,6 +7,8 @@
     is_ubuntu: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS' }}"
     is_debian_family: "{{ ansible_os_family == 'Debian' }}"
     is_debian: "{{ ansible_distribution == 'Debian' }}"
+    DBEAVER_INSTALL: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+    ADS_INSTALL: https://go.microsoft.com/fwlink/?linkid=2160876
 
   tasks:
     - set_fact: is_wsl={{ not is_mac and lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}
@@ -17,7 +19,7 @@
     - name: Install DBeaver SQL client from provided debian package
       become: yes
       apt:
-        deb: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+        deb: "{{ DBEAVER_INSTALL }}"
       when: is_debian_family and not is_wsl
 
     # Azure Data Studio
@@ -51,7 +53,7 @@
     - name: Install Azure Data Studio
       become: yes
       apt:
-        deb: https://go.microsoft.com/fwlink/?linkid=2157352
+        deb: "{{ ADS_INSTALL }}"
         state: present
         autoremove: true
       register: azuredatastudio
