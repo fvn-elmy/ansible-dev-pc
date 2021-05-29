@@ -62,7 +62,6 @@
         - mlocate
         - net-tools
         - p7zip-full
-        - snapd
         - unzip
         - uuid
         - xclip
@@ -72,12 +71,6 @@
         - etckeeper
         - task-spooler
         - libgconf-2-4
-      when: not is_mac
-
-    - name: Add /snap/bin to PATH
-      lineinfile:
-        path: ~/.bashrc
-        line: export PATH=$PATH:/snap/bin
       when: not is_mac
 
     - name: Get installed package list
