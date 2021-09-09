@@ -36,11 +36,24 @@
       retries: 5
       until: apt_update is success
 
+    - name: Install WireGuard (Linux)
+      become: yes
+      apt:
+        package: wireguard
+      when: is_ubuntu and not is_wsl
+
+    - name: Install WireGuard Tools (Linux)
+      become: yes
+      apt:
+        package: wireguard-tools
+      when: is_ubuntu and not is_wsl
+
     - name: Install Pritunl VPN (Linux)
       become: yes
       apt:
         package: pritunl-client-electron
       when: is_ubuntu and not is_wsl
+
 
     # macOS
 
