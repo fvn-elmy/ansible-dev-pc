@@ -35,6 +35,12 @@
         package: v4l-utils
       when: is_ubuntu and not is_wsl
 
+    - name: Install GIFsicle (Linux)
+      become: yes
+      apt:
+        package: gifsicle
+      when: is_ubuntu and not is_wsl
+
     # macOS
 
     - name: Install VLC media player (macOS)
