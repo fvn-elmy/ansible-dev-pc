@@ -58,3 +58,9 @@
         autoremove: true
       register: azuredatastudio
       # when: azuredatastudio_deps.changed and is_debian_family and not is_wsl
+
+    - name: Install Wireshark
+      become: yes
+      apt:
+        package: wireshark
+      when: is_ubuntu and not is_wsl
