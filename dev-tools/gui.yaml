@@ -8,7 +8,7 @@
     is_debian_family: "{{ ansible_os_family == 'Debian' }}"
     is_debian: "{{ ansible_distribution == 'Debian' }}"
     DBEAVER_INSTALL: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
-    ADS_INSTALL: https://go.microsoft.com/fwlink/?linkid=2169956
+    ADS_INSTALL: https://go.microsoft.com/fwlink/?linkid=2198763
 
   tasks:
     - set_fact: is_wsl={{ not is_mac and lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}

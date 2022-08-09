@@ -3,9 +3,8 @@
   connection: local
 
   vars:
-    ubuntu_focal_installer_version: 5.4.0-55.153
-    download_url: "https://www.synaptics.com/sites/default/files/exe_files/2021-04/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.4-EXE.zip"
-
+    ubuntu_focal_installer_version: 5.6.0-59.176
+    download_url: "https://synaptics.com/sites/default/files/exe_files/2022-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.6-EXE.zip"
     is_ubuntu_focal: "{{ ansible_distribution_release == 'focal' }}"
 
   tasks:
