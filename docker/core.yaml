@@ -49,6 +49,7 @@
         - docker-ce
         - docker-ce-cli
         - docker-compose
+        - docker-compose-plugin
       when: not is_mac and not is_wsl
 
     - name: Enable Docker engine for current user
