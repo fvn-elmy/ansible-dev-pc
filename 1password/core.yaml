@@ -45,7 +45,7 @@
         package: 1password
       when: is_debian_flavor and not is_wsl
 
-#    -name: Install 1Password CLI (Linux)
+    - name: Install 1Password CLI (Linux)
       become: yes
       get_url:
         url: https://cache.agilebits.com/dist/1P/op/pkg/{{ OP_VERSION }}/op_linux_amd64_{{ OP_VERSION }}.zip
