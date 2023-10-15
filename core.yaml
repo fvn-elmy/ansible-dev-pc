@@ -11,14 +11,14 @@
   tasks:
     - set_fact: is_wsl={{ lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}
 
-    - name: Disable auto-upgrade timer
-      become: yes
-      command:
-        cmd: systemctl disable {{ item }}.timer
-        removes: /etc/systemd/system/timers.target.wants/{{ item }}.timer
-      loop:
-        - apt-daily
-        - apt-daily-upgrade
+    # - name: Disable auto-upgrade timer
+    #   become: yes
+    #   command:
+    #     cmd: systemctl disable {{ item }}.timer
+    #     removes: /etc/systemd/system/timers.target.wants/{{ item }}.timer
+    #   loop:
+    #     - apt-daily
+    #     - apt-daily-upgrade
 
     - name: Create /etc/apt/keyrings
       become: yes
@@ -68,16 +68,21 @@
         package: "{{ item }}"
       loop:
         - curl
+        - tmux
         - dconf-editor
         - exfat-fuse
         - htop
         - inetutils-traceroute
         - jq
+        - mlocate
         - net-tools
         - p7zip-full
         - unzip
         - uuid
         - xclip
+        - direnv
+        - etckeeper
+        - task-spooler
 
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes
@@ -136,8 +141,3 @@
           [boot]
           systemd=true
       when: is_wsl
-
-    - name: Ensure ~/.hushlogin exists
-      file:
-        path: ~/.hushlogin
-        state: touch
