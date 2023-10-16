@@ -3,7 +3,8 @@
   connection: local
 
   vars:
-    go_version: 1.19.4
+    go_version: 1.21.3
+    go_arch: amd64
 
   tasks:
     - name: Create binary folder
@@ -15,7 +16,7 @@
     - name: Install Go
       become: yes
       unarchive:
-        src: https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz
+        src: https://go.dev/dl/go{{ go_version }}.linux-{{ go_arch }}.tar.gz
         dest: /opt/google/go{{ go_version }}
         remote_src: yes
         creates: /opt/google/go{{ go_version }}/go/bin/go

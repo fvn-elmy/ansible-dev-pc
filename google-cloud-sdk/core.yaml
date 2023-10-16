@@ -4,6 +4,7 @@
 
   vars:
     is_ubuntu: "{{ ansible_distribution == 'Ubuntu' }}"
+    CLOUD_PROXY_VERSION: v2.7.0
 
   tasks:
 
@@ -18,7 +19,7 @@
       register: apt_repository
       when: is_ubuntu
 
-    - name: Install Google Chrome (Linux)
+    - name: Install pre-requisites (Linux)
       become: yes
       apt:
         pkg:
@@ -46,5 +47,7 @@
     - name: Install Google Cloud SDK (Linux)
       become: yes
       apt:
-        package:  google-cloud-sdk
+        pkg:
+          - google-cloud-sdk
+          - google-cloud-sdk-gke-gcloud-auth-plugin
       when: is_ubuntu

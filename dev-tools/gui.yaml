@@ -8,7 +8,7 @@
     is_debian_family: "{{ ansible_os_family == 'Debian' }}"
     is_debian: "{{ ansible_distribution == 'Debian' }}"
     DBEAVER_INSTALL: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
-    ADS_INSTALL: https://go.microsoft.com/fwlink/?linkid=2215528
+    ADS_INSTALL: https://azuredatastudio-update.azurewebsites.net/latest/linux-deb-x64/stable
 
   tasks:
     - set_fact: is_wsl={{ not is_mac and lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}
@@ -23,33 +23,6 @@
       when: is_debian_family and not is_wsl
 
     # Azure Data Studio
-    - name: Remove any installed version of Azure Data Studio
-      become: yes
-      apt:
-        name: azuredatastudio
-        state: absent
-      when: is_debian_family
-
-    - name: Install Ubuntu Azure Data Studio requirements
-      become: yes
-      apt:
-        package: "{{ item }}"
-      loop:
-        - libxss1
-        - libgconf-2-4
-        - libunwind8
-      register: azuredatastudio_deps
-      when: is_ubuntu and not is_wsl
-
-    - name: Install Debian Azure Data Studio requirements
-      become: yes
-      apt:
-        package: "{{ item }}"
-      loop:
-        - libunwind8
-      register: azuredatastudio_deps
-      when: azuredatastudio_deps.changed and is_debian and not is_wsl
-
     - name: Install Azure Data Studio
       become: yes
       apt:

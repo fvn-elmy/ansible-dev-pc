@@ -1,0 +1,18 @@
+- name: Obsidian app
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+    is_debian: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS'  or ansible_distribution == 'Debian' }}"
+    OBSIDIAN_VERSION: 1.4.16
+    obsidian_package_url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{OBSIDIAN_VERSION}}/obsidian_{{OBSIDIAN_VERSION}}_amd64.deb"
+
+  tasks:
+    # Linux
+
+    - name: Install Obsidian app
+      become: yes
+      apt:
+        deb: "{{ obsidian_package_url }}"
+      when: is_debian

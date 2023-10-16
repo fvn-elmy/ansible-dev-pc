@@ -12,6 +12,11 @@
       - git-lfs
       - gitk
       - tig
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+    is_ubuntu: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS' }}"
+    is_debian_stretch: "{{ ansible_distribution_release == 'stretch' }}"
+
+
 
   tasks:
     - name: Add Git APT package key
@@ -48,7 +53,7 @@
       become: yes
       apt:
         package: ripgrep
-      when: not is_mac and not is_ubuntu_bionic and not is_debian_stretch
+      when: not is_mac and not is_debian_stretch
 
     # macOS
 

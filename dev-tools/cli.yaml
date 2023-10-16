@@ -5,10 +5,9 @@
   vars:
     is_debian: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS'  or ansible_distribution == 'Debian' }}"
     is_mac: "{{ ansible_distribution == 'MacOSX' }}"
-    SOPS_VERSION: "3.6.1"
-    GLOW_VERSION: "1.1.0"
-    ELM_VERSION: "0.19.1"
-    ELM_RELEASE_URL: "https://github.com/elm/compiler/releases/download/{{ELM_VERSION}}/binary-for-linux-64-bit.gz"
+    SOPS_VERSION: "3.8.1"
+    GLOW_VERSION: "1.5.1"
+    ZOXIDE_VERSION: "0.9.2"
 
   tasks:
     # Linux
@@ -17,13 +16,13 @@
     - name: Install SOPS from github releases
       become: yes
       apt:
-        deb: https://github.com/mozilla/sops/releases/download/v{{SOPS_VERSION}}/sops_{{SOPS_VERSION}}_amd64.deb
+        deb: https://github.com/getsops/sops/releases/download/v{{SOPS_VERSION}}/sops_{{SOPS_VERSION}}_amd64.deb
       when: is_debian
 
     - name: Install Glow (TUI markdown reader)
       become: yes
       apt:
-        deb: https://github.com/charmbracelet/glow/releases/download/v{{GLOW_VERSION}}/glow_{{GLOW_VERSION}}_linux_amd64.deb
+        deb: https://github.com/charmbracelet/glow/releases/download/v{{GLOW_VERSION}}/glow_{{GLOW_VERSION}}_amd64.deb
       when: is_debian
 
     - name: Install FD (find alternative)
@@ -34,20 +33,7 @@
 
     - name: Install latest zoxide (Linux)
       become: yes
-      get_url:
-        url: https://gitreleases.dev/gh/ajeetdsouza/zoxide/latest/zoxide-x86_64-unknown-linux-gnu
-        dest: /usr/local/bin/zoxide
-        mode: 0755
+      apt:
+        deb: https://github.com/ajeetdsouza/zoxide/releases/download/v{{ZOXIDE_VERSION}}/zoxide_{{ZOXIDE_VERSION}}_amd64.deb
       register: zoxide_download_linux
       when: not is_mac
-
-    - name: Install latest ELM (Linux)
-      become: yes
-      become_method: sudo
-      shell: |
-        curl -L -o elm.gz {{ELM_RELEASE_URL}}
-        gunzip elm.gz
-        chmod +x elm
-        sudo mv elm /usr/local/bin/
-      register: elm_installed
-      when: not is_mac and not is_wsl

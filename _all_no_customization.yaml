@@ -13,18 +13,18 @@
 
 - import_playbook: core.yaml
 
+# Shell (Startship)
+- import_playbook: startship/core.yaml
+
 ##### Drivers
 
 # Display Link drivers
-- import_playbook: displaylink/core.yaml
+# - import_playbook: displaylink/core.yaml
 
 ##### Developer tools
 
 # Visual Studio Code
 - import_playbook: vscode/core.yaml
-
-## Broot
-#- import_playbook: broot/core.yaml
 
 # Docker
 - import_playbook: docker/core.yaml
@@ -47,30 +47,33 @@
 ## Virtualization (QEMU/KVM on Linux, VirtualBox on macOS)
 #- import_playbook: virtualization/core.yaml
 
-# Mono (.NET Framework)
-- import_playbook: mono/core.yaml
-
 # NodeJS
 - import_playbook: nodejs/core.yaml
 
 # Postman
 - import_playbook: postman/core.yaml
 
-# PowerShell Core
-- import_playbook: powershell-core/core.yaml
-
 # Python
 - import_playbook: python/core.yaml
+
+# QRCode
+- import_playbook: qrcode/core.yaml
 
 # Developer tools
 - import_playbook: dev-tools/cli.yaml
 - import_playbook: dev-tools/ui.yaml
 
-## Ruby
-#- import_playbook: ruby/core.yaml
-
 # rust-lang
 - import_playbook: rust-lang/core.yaml
+
+# Pritunl linux client and requirements (wireguard)
+- import_playbook: pritunl/core.yaml
+
+# VIM
+- import_playbook: vim/core.yaml
+
+# NeoVIM (TODO)
+- import_playbook: neovim/core.yaml
 
 ##### Applications (free)
 
@@ -86,41 +89,26 @@
 # Google Chrome
 - import_playbook: google-chrome/core.yaml
 
-## Prettier version of ping w/ graphs
-#- import_playbook: prettyping/core.yaml
+# Google Cloud SDK
+- import_playbook: google-cloud-sdk/core.yaml
 
-# RDP/X/VNC/SSH client
-- import_playbook: remmina/core.yaml
-
-## Slack desktop application
-#- import_playbook: slack/core.yaml
-
-# Microsoft Teams
-- import_playbook: teams/core.yaml
-
-# Multimedia tools (VLC, FFMPEG, Handbrake)
+# Multimedia tools (VLC, FFMPEG, Handbrake, Deezer)
 - import_playbook: video/core.yaml
 - import_playbook: obs-studio/core.yaml
 
 # Image manipulation
 - import_playbook: image-processing/core.yaml
 
+# Obsidian linux client
+- import_playbook: obsidian/core.yaml
+
+# Discord linux client
+- import_playbook: discord/core.yaml
+
+# CoBang QRCode linux client
+- import_playbook: cobang/core.yaml
+
 ##### Applications (commercial license required)
-
-## Beyond Compare 4
-#- import_playbook: bc4/core.yaml
-
-## Google Backup and Sync (macOS) / Insync (Linux)
-#- import_playbook: google-backup/core.yaml
-
-## JetBrains Toolbox (used to install/updated JetBrains tools)
-#- import_playbook: jetbrains/core.yaml
-
-## Spotify
-#- import_playbook: spotify/core.yaml
-
-# Sublime Text and Sublime Merge
-- import_playbook: sublime/core.yaml
 
 # 1Password linux beta client
 - import_playbook: 1password/core.yaml

@@ -15,7 +15,7 @@
         package: "{{ item }}"
       loop:
         - postgresql-client
-        - mariadb-client-10.3
+        # - mariadb-client-10.3
       when: is_ubuntu
 
     # macOS
@@ -24,6 +24,6 @@
       homebrew:
         name: "{{ item }}"
       loop:
-        - mariadb
+        # - mariadb
         - postgres
       when: is_mac

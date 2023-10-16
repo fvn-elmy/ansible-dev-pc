@@ -271,6 +271,9 @@
       # TopIconsFix (shows legacy app icons in Gnome 3)
       - name: topiconsfix@aleskva@devnullmail.com
         url: https://extensions.gnome.org/extension-data/topiconsfixaleskvadevnullmail.com.v15.shell-extension.zip
+      # V-Shell (Vertical Workspaces)
+      - name: vertical-workspaces@G-dH.github.com
+        url: https://extensions.gnome.org/extension-data/vertical-workspacesG-dH.github.com.v37.shell-extension.zip
 
   tasks:
     - set_fact: is_wsl={{ lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}

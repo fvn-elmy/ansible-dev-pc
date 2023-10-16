@@ -6,7 +6,6 @@
     is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     is_ubuntu: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS' }}"
     is_debian_flavor: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS' or ansible_distribution == 'Debian'}}"
-    OP_VERSION: "v1.9.0"
 
   tasks:
     - set_fact: is_wsl={{ not is_mac and lookup('file', '/proc/version') is regex('(M|m)icrosoft') }}
@@ -16,15 +15,15 @@
     - name: Add 1Password APT package key
       become: yes
       apt_key:
-        keyserver: hkp://keyserver.ubuntu.com:80
-        id: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
-        keyring: /usr/share/keyrings/1password.gpg
+        url: https://downloads.1password.com/linux/keys/1password.asc
+        keyring: /usr/share/keyrings/1password-archive-keyring.gpg
+        state: present
       when: is_debian_flavor and not is_wsl
 
     - name: Add 1Password APT package repository
       become: yes
       apt_repository:
-        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/1password.gpg] https://downloads.1password.com/linux/debian edge main
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main
         filename: 1password
         update_cache: no
       register: apt_repository
@@ -47,10 +46,8 @@
 
     - name: Install 1Password CLI (Linux)
       become: yes
-      get_url:
-        url: https://cache.agilebits.com/dist/1P/op/pkg/{{ OP_VERSION }}/op_linux_amd64_{{ OP_VERSION }}.zip
-        dest: /usr/local/bin/op
-        mode: 0755
+      apt:
+        deb: https://downloads.1password.com/linux/debian/amd64/stable/1password-cli-amd64-latest.deb
       register: op_download_linux
       when: not is_mac
 
