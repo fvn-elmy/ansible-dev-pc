@@ -37,3 +37,23 @@
         deb: https://github.com/ajeetdsouza/zoxide/releases/download/v{{ZOXIDE_VERSION}}/zoxide_{{ZOXIDE_VERSION}}_amd64.deb
       register: zoxide_download_linux
       when: not is_mac
+
+    # download & install JQP
+    - name: Determine JQP latest version
+      shell:
+        cmd: "curl -s https://api.github.com/repos/noahgorstein/jqp/releases/latest | jq -r .name"
+        warn: false
+      register: jqp_version
+      when: is_debian
+
+    - name: Install JQP (Linux)
+      become: yes
+      ansible.builtin.unarchive:
+        remote_src: yes
+        src: "https://github.com/noahgorstein/jqp/releases/download/{{ jqp_version.stdout }}/jqp_Linux_x86_64.tar.gz"
+        dest: /usr/local/bin
+        extra_opts:
+          - "jqp"
+        creates: /usr/local/bin/jqp
+        mode: 0755
+      when: is_debian

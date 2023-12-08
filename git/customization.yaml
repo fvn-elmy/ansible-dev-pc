@@ -4,6 +4,9 @@
   hosts: 127.0.0.1
   connection: local
 
+  vars:
+    is_debian: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS'  or ansible_distribution == 'Debian' }}"
+
   tasks:
     - name: Install diffr
       command: ~/.cargo/bin/cargo install diffr
@@ -14,6 +17,36 @@
       command: ~/.cargo/bin/cargo install difftastic
       args:
         creates: ~/.cargo/bin/difft
+
+    # download & install delta
+    - name: Determine delta latest version
+      shell:
+        cmd: "curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r .name"
+        warn: false
+      register: delta_version
+      when: is_debian
+
+    - name: Install latest delta (Linux amd64)
+      become: yes
+      apt:
+        deb: https://github.com/dandavison/delta/releases/download/{{ delta_version.stdout }}/git-delta_{{ delta_version.stdout }}_amd64.deb
+      register: delta_download_linux
+      when: is_debian
+
+    # download & install hwatch
+    - name: Determine hwatch latest version
+      shell:
+        cmd: "curl -s https://api.github.com/repos/blacknon/hwatch/releases/latest | jq -r .name"
+        warn: false
+      register: hwatch_version
+      when: is_debian
+
+    - name: Install latest hwatch (Linux amd64)
+      become: yes
+      apt:
+        deb: https://github.com/blacknon/hwatch/releases/download/{{ hwatch_version.stdout }}/hwatch-{{ hwatch_version.stdout }}.x86_64-unknown-linux-musl.deb
+      register: hwatch_download_linux
+      when: is_debian
 
     - name: Download git-completion.bash
       get_url:

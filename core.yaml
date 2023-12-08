@@ -86,6 +86,7 @@
         - etckeeper
         - task-spooler
         - libgconf-2-4
+        - usb-creator-gtk
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes
       apt:
@@ -143,25 +144,3 @@
           [boot]
           systemd=true
       when: is_wsl
-
-    # download & install JQP
-    - name: Determine JQP latest version
-      shell:
-        cmd: "curl -s https://api.github.com/repos/noahgorstein/jqp/releases/latest | jq -r .name"
-        warn: false
-      register: jqp_version
-      when: is_ubu_22_04_or_newer
-
-    - name: Install JQP (Linux)
-      become: yes
-      ansible.builtin.unarchive:
-        remote_src: yes
-        src: "https://github.com/noahgorstein/jqp/releases/download/{{ jqp_version.stdout }}/jqp_Linux_x86_64.tar.gz"
-        dest: /usr/local/bin
-        extra_opts:
-          - "jqp"
-        creates: /usr/local/bin/jqp
-        mode: 0755
-      when: is_ubu_22_04_or_newer
-
-

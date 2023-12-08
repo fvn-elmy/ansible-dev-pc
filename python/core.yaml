@@ -3,6 +3,19 @@
   connection: local
 
   tasks:
+
+    - name: "[Non-WSL] Install pre-requisites"
+      become: yes
+      apt:
+        package: "{{ item }}"
+      loop:
+        - libsqlite3-dev
+        - libfontconfig1-dev
+        - liblzma-dev
+        - libssl-dev
+        - zlib1g-dev
+        - python3-tk
+
     - name: Install pyenv
       git:
         dest: ~/.pyenv
