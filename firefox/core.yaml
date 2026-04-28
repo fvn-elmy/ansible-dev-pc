@@ -1,0 +1,59 @@
+- name: Firefox PWA
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+    is_debian: "{{ ansible_distribution == 'Debian' }}"
+    is_ubuntu: "{{ ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS' }}"
+
+  tasks:
+    # Linux
+
+    - name: Install required packages for third-party repositories (Debian-only)
+      become: yes
+      apt:
+        pkg:
+        - debian-archive-keyring
+      when: is_debian
+
+    - name: Install required packages for third-party repositories (Debian)
+      become: yes
+      apt:
+        pkg:
+        - curl
+        - gpg
+        - apt-transport-https
+      when: is_debian or is_ubuntu
+
+    - name: Import GPG key and enable the repository
+      become: yes
+      apt_key:
+        url: https://packagecloud.io/filips/FirefoxPWA/gpgkey
+        keyring: /usr/share/keyrings/firefoxpwa-keyring.gpg
+      when: is_debian or is_ubuntu
+
+    - name: Enable the repository
+      become: yes
+      apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/firefoxpwa-keyring.gpg] https://packagecloud.io/filips/FirefoxPWA/any any main
+        filename: firefoxpwa
+        update_cache: no
+      register: apt_repository
+      when: is_debian or is_ubuntu
+
+    - name: Refresh repositories
+      become: yes
+      apt:
+        update_cache: yes
+      when: apt_repository.changed
+      register: apt_update
+      retries: 5
+      until: apt_update is success
+
+    - name: and install the FirefoxPWA package
+      become: yes
+      apt:
+        pkg:
+          - firefoxpwa
+      when: is_debian or is_ubuntu

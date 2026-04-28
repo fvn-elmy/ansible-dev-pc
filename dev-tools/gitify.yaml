@@ -1,0 +1,23 @@
+- name: kubernetes
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+
+  tasks:
+    # Linux
+
+    - name: Determine gitify latest version
+      shell:
+        cmd: curl -s https://api.github.com/repos/gitify-app/gitify/releases/latest | jq -r 'if (.name | startswith("v")) then .name[1:] else .name end'
+        warn: false
+      register: gitify_version
+      when: not is_mac
+
+    - name: Install gitify from github releases
+      become: yes
+      apt:
+        deb: https://github.com/gitify-app/gitify/releases/download/v{{ gitify_version.stdout }}/gitify_{{ gitify_version.stdout }}_amd64.deb
+      register: gitify_download_linux
+      when: not is_mac

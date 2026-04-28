@@ -87,6 +87,7 @@
         - task-spooler
         - libgconf-2-4
         - usb-creator-gtk
+        - stow
     - name: "[Ubuntu pre-22.04] Install exfat-utils"
       become: yes
       apt:
